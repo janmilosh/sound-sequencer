@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="drumApp">
+  <head>
+    <meta charset="utf-8">
+    <title>SM-808</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <button id="button" onclick="playDrum('drum1')" >play</button>
+    <audio id="drum1" width="320" height="176">
+      <source src="sounds/crash-1.mp3" type="audio/mp3">
+    </audio>
+
+    <div ng-view></div>
+
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-route.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services.js"></script>
+    <script src="scripts/controllers.js"></script>
+  </body>
+</html>

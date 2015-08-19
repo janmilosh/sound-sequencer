@@ -1,0 +1,5 @@
+                        Time(hrs.)
+
+set up initial files:               1   
+test audio tag concept:             0.5
+create initial models/methods:      1
