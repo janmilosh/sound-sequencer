@@ -17,11 +17,11 @@ drumApp.config(function ($routeProvider, $locationProvider) {
 });
 
 //test out audo tag and methods
-var audio = document.getElementById("drum1");
-audio.preload = "auto";
+// var audio = document.getElementById("drum1");
+// audio.preload = "auto";
 
-var button = document.getElementById("button");
-function playDrum(elem) { 
-    document.getElementById(elem).load();
-    document.getElementById(elem).play();
-}
+// var button = document.getElementById("button");
+// function playDrum(elem) { 
+//     document.getElementById(elem).load();
+//     document.getElementById(elem).play();
+// }
