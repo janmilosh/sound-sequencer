@@ -1,4 +1,50 @@
-<div ng-controller="HomeController" class="wrapper">
-
-  <h1>SM-808</h1>
+<div ng-controller="HomeController">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4">
+        <h1>SM-808</h1>
+      </div>
+      <div class="col-xs-8">
+        <h2 class="text-right">{{ currentSong.name }}</h2>
+      </div>
+    </div>
+    
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-lg-6">
+        <form ng-submit="createNewSong()" name="newSongForm" novalidate>
+          <input type="text"
+            name="songName"
+            ng-model="songname"
+            placeholder="New Song Name"
+            required>
+          <button type="submit" class="btn btn-primary" ng-disabled="newSongForm.$invalid">New Song</button>
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <div class="row" ng-repeat="song in songList track by $index">
+          <div class="col-xs-9">
+            <button class="btn btn-default btn-med btn-block" ng-click="selectSong($index)">{{ song.name }}</button>
+          </div>
+          <div class="col-xs-3">    
+            <button class="btn btn-default btn-med btn-block" ng-click="deleteSong($index)">remove</button>
+          </div>
+        </div>
+      </div>
+    </div>   
+  </div>
 </div>

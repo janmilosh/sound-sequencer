@@ -1,0 +1,37 @@
+h1 {
+  
+}
+
+input[type="text"] {
+  width: 75%;
+  height: 34px;
+  padding-left: 8px;
+  margin-bottom: 10px;
+  position: relative;
+  top: -4px;
+}
+
+.btn {
+  margin-bottom: 10px;
+  overflow-x: hidden;
+}
+
+.songname {
+  font-size: 18px;
+  padding: 5px 8px;
+  color: white;
+  background: #888;
+  cursor: pointer;  
+}
+
+.songname span {
+  float: right;
+  font-size: 18px;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+  

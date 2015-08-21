@@ -23,3 +23,16 @@ describe('Song Service', function() {
     });
   });
 });
+
+xdescribe('SongUtils Service', function() {
+  var SongCreator, NewSong, SongUtils;
+  
+  beforeEach(module('drumServices'));
+  beforeEach(inject(function(_Song_, _NewSong_, _SongUtils_){
+    NewSong = _NewSong_;
+    Song = _Song_;
+    SongUtils = _SongUtils_;
+  }));
+  
+});
+

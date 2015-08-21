@@ -1,0 +1,8 @@
+<form name="newSongForm" novalidate>
+  <input type="text"
+    name="songName"
+    ng-model="songname"
+    placeholder="New Song Name"
+    required>
+  <button type="submit" class="btn btn-primary" ng-disabled="newSongForm.$invalid" ng-click="createNewSong()">New Song</button>
+</form>
