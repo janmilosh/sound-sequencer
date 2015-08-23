@@ -15,45 +15,88 @@ drumServices.constant('DRUMLIST', [
 ]);
 
 drumServices.factory('$localstorage', ['$window', function($window) {
-  //usage: http://learn.ionicframework.com/formulas/localstorage/
+  //based on: http://learn.ionicframework.com/formulas/localstorage/
   return {
     set: function(key, value) {
-      $window.localStorage[key] = value;
-    },
-    get: function(key, defaultValue) {
-      return $window.localStorage[key] || defaultValue;
-    },
-    setObject: function(key, value) {
       $window.localStorage[key] = JSON.stringify(value);
     },
-    getObject: function(key) {
-      return JSON.parse($window.localStorage[key] || '[]');
+    get: function(key) {
+      var value = $window.localStorage[key];
+      if (value) {
+        return JSON.parse(value);
+      } else {
+        return false;
+      }
     }
-  }
+  };
 }]);
+
+drumServices.factory('Unique', function() {
+  return {
+    isUniqueSongname: function(songName, songList) {
+      var unique = true;
+      angular.forEach(songList, function(song) {
+        if (songName === song.name) {
+          unique =  false;
+        }
+      });
+      return unique;  
+    }
+  };
+});
 
 drumServices.service('SongUtils', function(Song, $localstorage) {
   var service = this;
   service.getSongList = function() {
-    return $localstorage.getObject('songList');
+    return $localstorage.get('sm-808-songList');
   };
+  service.getCurrentSong = function() {
+    return $localstorage.get('sm-808-currentSong')
+  };
+  service.setRangeArray = function(steps) {
+    var range = [];
+    for(var i = 1; i < steps + 1; i++) {
+      range.push(i);
+    }
+    return range;
+  };
+  service.isUniqueSongname = function(songName, songList) {
+    console.log('checking for uniqueness')
+    var unique = true;
+    angular.forEach(songList, function(song) {
+      if (songName === song.name) {
+        unique =  false;
+      }
+    });
+    return unique;
+  }
 });
 
 drumServices.factory('Song', function(DRUMLIST){  
-  var populateDrumlist = function(drumArray) {
+  var setEmptyStepsArray = function(steps) {
+    var stepsArray = [];
+    for(var i = 0; i < steps; i++) {
+      stepsArray.push('off');
+    }
+    return stepsArray;
+  };
+
+  var populateDrumlist = function(drumArray, steps) {
     angular.forEach(DRUMLIST, function(drum) {
+      
       drumArray.push({
                   title: drum[0],
                   link: 'sounds/' + drum[1],
-                  stepsArray: []
+                  stepsArray: setEmptyStepsArray(steps)
                 });
     });
   };
 
-  var Song = function(name) {
+  var Song = function(name, steps) {
     this.name = name;
     this.drums = []
-    populateDrumlist(this.drums);
+    this.steps = steps
+    populateDrumlist(this.drums, this.steps);
   };
 
   return Song;

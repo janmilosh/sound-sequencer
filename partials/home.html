@@ -1,47 +1,53 @@
 <div ng-controller="HomeController">
   <div class="container">
     <div class="row">
-      <div class="col-xs-4">
+      <div class="col-xs-6">
         <h1>SM-808</h1>
       </div>
-      <div class="col-xs-8">
-        <h2 class="text-right">{{ currentSong.name }}</h2>
+      <div class="col-xs-6">
+        <div class="row">
+          <form ng-submit="createNewSong()" name="form" novalidate>
+            <div class="col-xs-9">  
+              <input type="text"
+                name="songName"
+                ng-model="songname"
+                placeholder="New Pattern Name"
+                required
+                unique>
+              <p class="error" ng-if='form.songName.$error.unique'>Please input a unique name!</p>
+            </div> 
+            <div class="col-xs-3">
+              <button type="submit" class="btn btn-primary btn-med btn-block" ng-disabled="form.$invalid">New Song</button>
+            </div>   
+          </form>
+        </div>
       </div>
     </div>
-    
     <table class="table table-bordered">
       <thead>
         <tr>
           <td></td>
+          <td class="text-center" ng-repeat="stepNumber in range">{{ stepNumber }}</td>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
+        <tr ng-repeat="drum in currentSong.drums">
+          <td class="text-center">{{ drum.title }}</td>
+          <td ng-class="step" ng-repeat="step in drum.stepsArray track by $index"></td>
         </tr>
       </tbody>
     </table>
     <div class="row">
       <div class="col-lg-6">
-        <form ng-submit="createNewSong()" name="newSongForm" novalidate>
-          <input type="text"
-            name="songName"
-            ng-model="songname"
-            placeholder="New Song Name"
-            required>
-          <button type="submit" class="btn btn-primary" ng-disabled="newSongForm.$invalid">New Song</button>
-        </form>
+        <h2>{{ currentSong.name }}</h2>
       </div>
       <div class="col-lg-6">
         <div class="row" ng-repeat="song in songList track by $index">
           <div class="col-xs-9">
-            <button class="btn btn-default btn-med btn-block" ng-click="selectSong($index)">{{ song.name }}</button>
+            <button ng-class="{ 'current-song': isCurrent($index) }" class="btn btn-med btn-block song-button" ng-click="selectSong($index)">{{ song.name }}</button>
           </div>
           <div class="col-xs-3">    
-            <button class="btn btn-default btn-med btn-block" ng-click="deleteSong($index)">remove</button>
+            <button ng-if="songList.length > 1" class="btn btn-default btn-med btn-block" ng-click="deleteSong($index)">remove</button>
           </div>
         </div>
       </div>
