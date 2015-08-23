@@ -1,23 +1,23 @@
 <div ng-controller="HomeController">
   <div class="container">
     <div class="row">
-      <div class="col-xs-6">
-        <h1>SM-808</h1>
+      <div class="col-xs-7">
+        <h1>Sound Sequencer</h1>
       </div>
-      <div class="col-xs-6">
+      <div class="col-xs-5">
         <div class="row">
           <form ng-submit="createNewSong()" name="form" novalidate>
             <div class="col-xs-9">  
               <input type="text"
                 name="songName"
                 ng-model="songname"
-                placeholder="New Pattern Name"
+                placeholder="New Sequence Name"
                 required
                 unique>
               <p class="error" ng-if='form.songName.$error.unique'>Please input a unique name!</p>
             </div> 
             <div class="col-xs-3">
-              <button type="submit" class="btn btn-primary btn-med btn-block" ng-disabled="form.$invalid">New Song</button>
+              <button type="submit" class="btn btn-primary btn-med btn-block" ng-disabled="form.$invalid">Add New</button>
             </div>   
           </form>
         </div>
