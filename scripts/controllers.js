@@ -36,6 +36,7 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
   $scope.selectSong = function(index) {
     $scope.currentSong = $scope.songList[index];
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
+    $localstorage.set('sm-808-currentSong', $scope.currentSong);
   };
 
   if (!$scope.songList) {

@@ -32,7 +32,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="drum in currentSong.drums track by $index">
-          <td class="text-center">{{ drum.title }}</td>
+          <td class="drum-title text-center">{{ drum.title }}</td>
           <td ng-click="toggleState($parent.$index, $index)" ng-class="step" ng-repeat="step in drum.stepsArray track by $index"></td>
         </tr>
       </tbody>

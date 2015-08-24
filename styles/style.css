@@ -73,13 +73,21 @@ p.error {
 }
 
 tbody td.off {
-  background: #ccc;
+  background: #46647D;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
   cursor: pointer;
 }
 
 tbody td.on {
-  background: orange;
+  background: #FF9140;
+  box-shadow: inset 0 0 11px rgba(0,0,0,0.4);
   cursor: pointer;
+}
+
+td.drum-title,
+thead td {
+  background: #415769;
+  color: white;
 }
 
 .song-button {
@@ -87,11 +95,13 @@ tbody td.on {
 }
 
 .song-button:hover {
-  background: #FDCE9E;
+  background: #FFA05A;
+  color: white;
 }
 
-.current-song {
-  background: #FDCE9E;
+.song-button.current-song {
+  background: #FFA05A;
+  color: white;
 }
 
   
