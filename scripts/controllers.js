@@ -45,6 +45,20 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
   if (!$scope.currentSong) {
     $scope.songname = 'Four on the Floor';
     $scope.createNewSong();
+    SongUtils.addFourOnTheFloorSequence($scope.currentSong);
+    $localstorage.set('sm-808-songList', $scope.songList);
+    $localstorage.set('sm-808-currentSong', $scope.currentSong);
+  }
+
+  $scope.toggleState = function(drumIndex, index) {
+    console.log(drumIndex, index)
+    if ($scope.currentSong.drums[drumIndex].stepsArray[index] === 'on') {
+      $scope.currentSong.drums[drumIndex].stepsArray[index] = 'off';
+    } else {
+      $scope.currentSong.drums[drumIndex].stepsArray[index] = 'on';
+    }
+    $localstorage.set('sm-808-songList', $scope.songList);
+    $localstorage.set('sm-808-currentSong', $scope.currentSong);
   }
 
   $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);

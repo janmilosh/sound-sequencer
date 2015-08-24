@@ -74,10 +74,12 @@ p.error {
 
 tbody td.off {
   background: #ccc;
+  cursor: pointer;
 }
 
 tbody td.on {
   background: orange;
+  cursor: pointer;
 }
 
 .song-button {

@@ -61,7 +61,6 @@ drumServices.service('SongUtils', function(Song, $localstorage) {
     return range;
   };
   service.isUniqueSongname = function(songName, songList) {
-    console.log('checking for uniqueness')
     var unique = true;
     angular.forEach(songList, function(song) {
       if (songName === song.name) {
@@ -69,7 +68,19 @@ drumServices.service('SongUtils', function(Song, $localstorage) {
       }
     });
     return unique;
-  }
+  };
+  service.addFourOnTheFloorSequence = function(currentSong) {
+    currentSong.drums[4].stepsArray[2] = 'on';
+    currentSong.drums[4].stepsArray[6] = 'on';
+    currentSong.drums[4].stepsArray[10] = 'on';
+    currentSong.drums[4].stepsArray[14] = 'on';
+    currentSong.drums[5].stepsArray[0] = 'on';
+    currentSong.drums[5].stepsArray[4] = 'on';
+    currentSong.drums[5].stepsArray[8] = 'on';
+    currentSong.drums[5].stepsArray[12] = 'on';
+    currentSong.drums[8].stepsArray[4] = 'on';
+    currentSong.drums[8].stepsArray[12] = 'on';
+  };
 });
 
 drumServices.factory('Song', function(DRUMLIST){  
