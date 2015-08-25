@@ -43,14 +43,27 @@
         <div class="row">
           <div class="col-xs-8">
             <div class="slider-container">
+              <!--https://github.com/PopSugar/angular-slider-->
               <slider slider-update floor="40" ceiling="212" step="4" precision="4" ng-model="currentSong.bpm"></slider>
             </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-xs-2">
+            <form name="stepsForm">
+              <select
+                class="form-control"
+                name="stepsSelect" 
+                ng-model="selectedOption" 
+                ng-options="option.value as option.name for option in options">
+              </select>
+            </form>
+            <hr>
+          </div>
+          <div class="col-xs-2">
+            <p>Steps</p>
           </div>
         </div>
       </div>
-      <div class="col-lg-5">
+      <div class="col-lg-5 song-list">
         <div class="row" ng-repeat="song in songList track by $index">
           <div class="col-xs-9">
             <button ng-class="{ 'current-song': isCurrent($index) }" class="btn btn-med btn-block song-button" ng-click="selectSong($index)">{{ song.name }}</button>

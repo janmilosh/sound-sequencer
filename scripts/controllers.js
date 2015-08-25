@@ -2,10 +2,13 @@
 
 var drumControllers = angular.module('drumControllers', []);
 
-drumControllers.controller('HomeController', function ($scope, Song, $localstorage, SongUtils, Unique) {
+drumControllers.controller('HomeController', function ($scope, Song, $localstorage, SongUtils, Unique, STEPS_OPTIONS) {
   
   $scope.songList = SongUtils.getSongList();
-  $scope.currentSong = SongUtils.getCurrentSong(); 
+  $scope.currentSong = SongUtils.getCurrentSong();
+  
+  $scope.options = STEPS_OPTIONS;
+  $scope.selectedOption = $scope.options[8].value;
 
   $scope.isCurrent = function(index) {
     return $scope.currentSong.name === $scope.songList[index].name;

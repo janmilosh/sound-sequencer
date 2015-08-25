@@ -19,7 +19,6 @@ drumDirectives.directive('sliderUpdate', function ($localstorage) {
     require: 'ngModel',
     link: function(scope, elem, attr, ngModel) {
         scope.$watch('currentSong.bpm',function(oldVal, newVal) {
-        console.log(oldVal, newVal)
         $localstorage.set('sm-808-songList', scope.songList);
         $localstorage.set('sm-808-currentSong', scope.currentSong);
       });

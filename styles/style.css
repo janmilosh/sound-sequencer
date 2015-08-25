@@ -46,17 +46,8 @@ p.error {
   outline-offset: -2px;
 }
 
-.songname {
-  font-size: 18px;
-  padding: 5px 8px;
-  color: white;
-  background: #888;
-  cursor: pointer;  
-}
-
-.songname span {
-  float: right;
-  font-size: 18px;
+.song-list {
+  margin-top: 15px;
 }
 
 .table>thead>tr>th,
