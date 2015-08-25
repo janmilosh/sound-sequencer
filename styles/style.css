@@ -1,10 +1,16 @@
 body {
   padding-top: 30px;
+  background: #f1f1f1;
 }
 
 h1, h2, h3 {
   margin-top: 0;
   margin-bottom: 16px;
+  color: #394D5D;
+}
+
+p, .btn-default {
+  color: #394D5D;
 }
 
 input[type="text"] {
@@ -91,11 +97,12 @@ thead td {
 }
 
 .song-button {
-  background: #eee;
+  background: #789AB5;
+  color: white;
 }
 
 .song-button:hover {
-  background: #FFA05A;
+  background: #6D92AF;
   color: white;
 }
 
@@ -104,4 +111,53 @@ thead td {
   color: white;
 }
 
-  
+ /* Slider styles */
+
+.slider-container {
+  margin: 0 0 30px;
+}
+
+slider, [slider] {
+  height: 10px;
+}
+
+slider div.bar, [slider] div.bar {
+  background: #FF9140;
+}
+
+slider div.handle.active:after, [slider] div.handle.active:after {
+    background-color: #FFA05A;
+}
+
+slider div.handle, [slider] div.handle {
+  top: -5px;
+  border: 1px solid #394D5D;
+}
+
+slider div.handle:after, [slider] div.handle:after {
+    background-color: #394D5D;
+    top: 5px;
+    left: 5px;
+}
+
+slider div.bubble.limit.low,
+slider div.bubble.limit.high {
+  top: 13px;
+  color: #394D5D;
+  font-size: 16px;
+}
+
+slider div.bubble.limit.low {
+  left: -11px;
+}
+
+slider div.bubble.limit.high {
+  right: 5px;
+}
+
+slider div.bubble, [slider] div.bubble {
+  display: inline-block;
+  color: #394D5D;
+  top: -30px;
+  font-size: 16px;
+}

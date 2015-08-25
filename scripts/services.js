@@ -103,10 +103,11 @@ drumServices.factory('Song', function(DRUMLIST){
     });
   };
 
-  var Song = function(name, steps) {
+  var Song = function(name, steps, bpm) {
     this.name = name;
-    this.drums = []
-    this.steps = steps
+    this.drums = [];
+    this.steps = steps;
+    this.bpm = bpm;
     populateDrumlist(this.drums, this.steps);
   };
 

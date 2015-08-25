@@ -13,13 +13,15 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
 
   $scope.createNewSong = function() {
     var steps = 16;
-    var createdSong = new Song($scope.songname, steps);
+    var bpm = 108;
+    var createdSong = new Song($scope.songname, steps, bpm);
     $scope.songname = '';
     $scope.songList.unshift(createdSong);
     $localstorage.set('sm-808-songList', $scope.songList);
     $scope.currentSong = $scope.songList[0];
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
     $scope.range = SongUtils.setRangeArray(steps);
+    console.log($scope.currentSong)
   };
 
   $scope.deleteSong = function(index) {

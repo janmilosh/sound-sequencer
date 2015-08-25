@@ -4,6 +4,7 @@ var drumApp = angular.module('drumApp', [
   'drumServices',
   'drumControllers',
   'drumDirectives',
+  'ui.slider',
   'ngRoute'
 ]);
 
