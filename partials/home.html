@@ -1,10 +1,10 @@
 <div ng-controller="HomeController">
   <div class="container">
     <div class="row">
-      <div class="col-xs-7">
-        <h1>Sound Sequencer</h1>
+      <div class="col-lg-7 col-med-5">
+        <h2 class="songname">{{ currentSong.name }}</h2>
       </div>
-      <div class="col-xs-5">
+      <div class="col-lg-5 col-med-7">
         <div class="row">
           <form ng-submit="createNewSong()" name="form" novalidate>
             <div class="col-xs-9">  
@@ -38,29 +38,32 @@
       </tbody>
     </table>
     <div class="row">
-      <div class="col-xs-7">
-        <h2>{{ currentSong.name }}</h2>
-        <div class="row">
-          <div class="col-xs-8">
-            <div class="slider-container">
-              <!--https://github.com/PopSugar/angular-slider-->
-              <slider slider-update floor="40" ceiling="212" step="4" precision="4" ng-model="currentSong.bpm"></slider>
+      <div class="col-lg-7 col-sm-12">
+        <div class="panel clearfix">
+          <div class="row">
+            <div class="col-xs-9">
+              <div class="slider-container">
+                <!--https://github.com/PopSugar/angular-slider-->
+                <slider slider-update floor="40" ceiling="212" step="4" precision="4" ng-model="currentSong.bpm"></slider>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <form name="stepsForm" id="steps-form">
+                <label for="stepsSelect">steps</label>
+                <select
+                  class="form-control"
+                  name="stepsSelect" 
+                  ng-model="selectedOption" 
+                  ng-options="option.value as option.name for option in options">
+                </select>
+                
+              </form>
             </div>
           </div>
-          <div class="col-xs-2">
-            <form name="stepsForm">
-              <select
-                class="form-control"
-                name="stepsSelect" 
-                ng-model="selectedOption" 
-                ng-options="option.value as option.name for option in options">
-              </select>
-            </form>
-            <hr>
-          </div>
-          <div class="col-xs-2">
-            <p>Steps</p>
-          </div>
+            
+          <!-- <div class="col-xs-2">
+            <label for="stepsSelect">Steps</label>
+          </div> -->
         </div>
       </div>
       <div class="col-lg-5 song-list">
