@@ -106,7 +106,7 @@ drumServices.service('SongUtils', function(Song, $localstorage) {
 drumServices.factory('Song', function(DRUMLIST){  
   var setEmptyStepsArray = function(steps) {
     var stepsArray = [];
-    for(var i = 0; i < steps; i++) {
+    for(var i = 0; i < 24; i++) {
       stepsArray.push('off');
     }
     return stepsArray;

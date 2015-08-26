@@ -33,7 +33,7 @@
       <tbody>
         <tr ng-repeat="drum in currentSong.drums track by $index">
           <td class="drum-title text-center">{{ drum.title }}</td>
-          <td ng-click="toggleState($parent.$index, $index)" ng-class="step" ng-repeat="step in drum.stepsArray track by $index"></td>
+          <td ng-click="toggleState($parent.$index, $index)" ng-class="step" ng-repeat="step in drum.stepsArray | slice:currentSong.steps track by $index"></td>
         </tr>
       </tbody>
     </table>
@@ -51,19 +51,16 @@
               <form name="stepsForm" id="steps-form">
                 <label for="stepsSelect">steps</label>
                 <select
+                  select-update
                   class="form-control"
                   name="stepsSelect" 
-                  ng-model="selectedOption" 
+                  ng-model="selectedStepsOption" 
                   ng-options="option.value as option.name for option in options">
                 </select>
                 
               </form>
             </div>
           </div>
-            
-          <!-- <div class="col-xs-2">
-            <label for="stepsSelect">Steps</label>
-          </div> -->
         </div>
       </div>
       <div class="col-lg-5 song-list">

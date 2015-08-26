@@ -6,9 +6,8 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
   
   $scope.songList = SongUtils.getSongList();
   $scope.currentSong = SongUtils.getCurrentSong();
-  
+
   $scope.options = STEPS_OPTIONS;
-  $scope.selectedOption = $scope.options[8].value;
 
   $scope.isCurrent = function(index) {
     return $scope.currentSong.name === $scope.songList[index].name;
@@ -20,11 +19,10 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
     var createdSong = new Song($scope.songname, steps, bpm);
     $scope.songname = '';
     $scope.songList.unshift(createdSong);
-    $localstorage.set('sm-808-songList', $scope.songList);
     $scope.currentSong = $scope.songList[0];
+    $localstorage.set('sm-808-songList', $scope.songList);
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
-    $scope.range = SongUtils.setRangeArray(steps);
-    console.log($scope.currentSong)
+    $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
   };
 
   $scope.deleteSong = function(index) {
@@ -32,8 +30,8 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
     $scope.songList.splice(index, 1);
     if (deletedSong.name == $scope.currentSong.name) {
       $scope.currentSong = $scope.songList[0];
-      $localstorage.set('sm-808-currentSong', $scope.currentSong);
     }
+    $localstorage.set('sm-808-currentSong', $scope.currentSong);
     $localstorage.set('sm-808-songList', $scope.songList);
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
   };
@@ -41,6 +39,7 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
   $scope.selectSong = function(index) {
     $scope.currentSong = $scope.songList[index];
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
+    $scope.selectedStepsOption = $scope.currentSong.steps.toString();
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
   };
 
@@ -57,7 +56,6 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
   }
 
   $scope.toggleState = function(drumIndex, index) {
-    console.log(drumIndex, index)
     if ($scope.currentSong.drums[drumIndex].stepsArray[index] === 'on') {
       $scope.currentSong.drums[drumIndex].stepsArray[index] = 'off';
     } else {
@@ -67,6 +65,7 @@ drumControllers.controller('HomeController', function ($scope, Song, $localstora
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
   }
 
+  $scope.selectedStepsOption = $scope.currentSong.steps.toString();
   $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
 
 });
