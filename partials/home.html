@@ -33,7 +33,7 @@
       <tbody>
         <tr ng-repeat="drum in currentSong.drums track by $index">
           <td class="drum-title text-center">{{ drum.title }}</td>
-          <td ng-click="toggleState($parent.$index, $index)" ng-class="step" ng-repeat="step in drum.stepsArray | slice:currentSong.steps track by $index"></td>
+          <td ng-click="toggleState($parent.$index, $index)" ng-class="[step, {'playing' : currentIndex === $index}]" ng-repeat="step in drum.stepsArray | slice:currentSong.steps track by $index"></td>
         </tr>
       </tbody>
     </table>
@@ -41,10 +41,18 @@
       <div class="col-lg-7 col-sm-12">
         <div class="panel clearfix">
           <div class="row">
+            <div class="col-xs-6">
+              <button ng-click="startSequence()">Start</button>
+            </div>
+            <div class="col-xs-6">
+              <button ng-click="stopSequence()">Stop</button>
+            </div>
+          </div>
+          <div class="row">
             <div class="col-xs-9">
               <div class="slider-container">
                 <!--https://github.com/PopSugar/angular-slider-->
-                <slider slider-update floor="40" ceiling="212" step="4" precision="4" ng-model="currentSong.bpm"></slider>
+                <slider slider-update floor="100" ceiling="300" step="4" precision="4" ng-model="currentSong.bpm"></slider>
               </div>
             </div>
             <div class="col-xs-3">

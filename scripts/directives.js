@@ -14,11 +14,13 @@ drumDirectives.directive('unique', function (SongUtils) {
   };
 });
 
-drumDirectives.directive('sliderUpdate', function ($localstorage) { 
+drumDirectives.directive('sliderUpdate', function ($localstorage, $rootScope) { 
   return {
     require: 'ngModel',
     link: function(scope, elem, attr, ngModel) {
       scope.$watch('currentSong.bpm',function(newVal, oldVal) {
+        var stepInterval =  Math.round(60000/parseInt(newVal, 10));
+        $rootScope.$emit('setStepInterval', stepInterval);
         $localstorage.set('sm-808-songList', scope.songList);
         $localstorage.set('sm-808-currentSong', scope.currentSong);
       });

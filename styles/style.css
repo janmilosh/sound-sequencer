@@ -121,6 +121,10 @@ tbody td.on {
   cursor: pointer;
 }
 
+tbody td.on.playing {
+  background: #FF4A05;
+}
+
 td.drum-title,
 thead td {
   background: #415769;

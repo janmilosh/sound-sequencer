@@ -3,15 +3,15 @@
 var drumServices = angular.module('drumServices', []);
 
 drumServices.constant('DRUMLIST', [
-  ['Clap', 'clap.mp3'],
-  ['Clave', 'clave.mp3'],
-  ['Cow Bell', 'cow-bell.mp3'],
-  ['Crash', 'crash-1.mp3'],
-  ['Hi Hat', 'hi-hat-1.mp3'],
-  ['Kick Drum', 'kick-drum-1.mp3'],
-  ['Maracas', 'maracas.mp3'],
-  ['Rim Shot', 'rim-shot.mp3'],
-  ['Snare Drum', 'snare-drum-1.mp3']
+  ['Clap', 'clap.mp3', 'clapb.mp3'],
+  ['Clave', 'clave.mp3', 'claveb.mp3'],
+  ['Cow Bell', 'cow-bell.mp3', 'cow-bellb.mp3'],
+  ['Crash', 'crash-1.mp3', 'crash-1b.mp3'],
+  ['Hi Hat', 'hi-hat-1.mp3', 'hi-hat-1b.mp3'],
+  ['Kick Drum', 'kick-drum-1.mp3', 'kick-drum-1b.mp3'],
+  ['Maracas', 'maracas.mp3', 'maracasb.mp3'],
+  ['Rim Shot', 'rim-shot.mp3', 'rim-shotb.mp3'],
+  ['Snare Drum', 'snare-drum-1.mp3', 'snare-drum-1b.mp3']
 ]);
 
 drumServices.constant('STEPS_OPTIONS', [
@@ -117,7 +117,7 @@ drumServices.factory('Song', function(DRUMLIST){
       
       drumArray.push({
                   title: drum[0],
-                  link: 'sounds/' + drum[1],
+                  link: ['sounds/' + drum[1], 'sounds/' + drum[2]],
                   stepsArray: setEmptyStepsArray(steps)
                 });
     });
