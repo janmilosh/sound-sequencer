@@ -41,11 +41,10 @@
       <div class="col-lg-7 col-sm-12">
         <div class="panel clearfix">
           <div class="row">
-            <div class="col-xs-6">
-              <button ng-click="startSequence()">Start</button>
-            </div>
-            <div class="col-xs-6">
-              <button ng-click="stopSequence()">Stop</button>
+            <div class="col-md-9 col-xs-6"></div>
+            <div class="col-md-3 col-xs-6">
+              <button class="btn btn-med btn-default" ng-disabled="playing" ng-click="startSequence()">Start</button>
+              <button class="btn btn-med btn-default" ng-click="stopSequence()">Stop</button>
             </div>
           </div>
           <div class="row">

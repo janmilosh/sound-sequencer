@@ -23,6 +23,7 @@ drumDirectives.directive('sliderUpdate', function ($localstorage, $rootScope) {
         $rootScope.$emit('setStepInterval', stepInterval);
         $localstorage.set('sm-808-songList', scope.songList);
         $localstorage.set('sm-808-currentSong', scope.currentSong);
+        scope.stopSequence();
       });
     }
   };

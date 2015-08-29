@@ -2,12 +2,13 @@
 
 var drumControllers = angular.module('drumControllers', []);
 
-drumControllers.controller('HomeController', function ($rootScope, $scope, $localstorage, $interval, Song, SongUtils, Unique, STEPS_OPTIONS) {
+drumControllers.controller('HomeController', function ($rootScope, $scope, $localstorage, $interval, $timeout, Song, SongUtils, Unique, STEPS_OPTIONS) {
   
   $scope.songList = SongUtils.getSongList();
   $scope.currentSong = SongUtils.getCurrentSong();
 
   $scope.options = STEPS_OPTIONS;
+  var playedLast = {}
 
   $scope.isCurrent = function(index) {
     return $scope.currentSong.name === $scope.songList[index].name;
@@ -38,6 +39,8 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
     $localstorage.set('sm-808-songList', $scope.songList);
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
+    $scope.audioCache = setupAudio($scope.currentSong);
+    setPlayedLast();
   };
   
   $scope.selectSong = function(index) {
@@ -46,6 +49,7 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
     $scope.selectedStepsOption = $scope.currentSong.steps.toString();
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
     $scope.audioCache = setupAudio($scope.currentSong);
+    setPlayedLast();
   };
 
   $scope.toggleState = function(drumIndex, index) {
@@ -58,39 +62,47 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
   }
   
-  
-  var drumLoop = function(playFirst, index) {
+  function setPlayedLast() {
+    angular.forEach($scope.currentSong.drums, function(drum) {
+      playedLast[drum.title] = false;
+    });
+  };
+
+  function drumLoop(index) {
     angular.forEach($scope.currentSong.drums, function(drum) {
       if (drum.stepsArray[index] === 'on') {
-        if (playFirst) {
+        if (playedLast[drum.title] === false) {
           $scope.audioCache.first[drum.title].play();
           $scope.audioCache.second[drum.title].load();
         } else {
           $scope.audioCache.second[drum.title].play();
           $scope.audioCache.first[drum.title].load();
         }
+        playedLast[drum.title] = !playedLast[drum.title];
       }        
     });
-  }
-
+  };
+  
   $scope.startSequence = function() {
-    $scope.currentIndex = 0; 
-    var playFirst = true;
-    console.log($scope.currentIndex)
-    drumLoop(playFirst, $scope.currentIndex);
+    var songIndex = 0;
+    $scope.playing = true;
     
     var start = $interval(function() {
-      $scope.currentIndex += 1;
-      playFirst = !playFirst;
-      console.log($scope.currentIndex)
-      drumLoop(playFirst, $scope.currentIndex);
-                  
-      if ($scope.currentIndex > $scope.currentSong.steps - 2) {
-        $scope.currentIndex = -1;
+      drumLoop(songIndex);
+      
+      songIndex += 1;
+                 
+      if (songIndex === $scope.currentSong.steps) {
+        songIndex = 0;
+        $scope.currentIndex = $scope.currentSong.steps -1;
+      } else {
+        $scope.currentIndex = songIndex - 1;
       }
-
+      
       $scope.stopSequence = function() {
         $interval.cancel(start);
+        $scope.currentIndex = null;
+        $scope.playing = false;
       };
 
     }, $scope.stepInterval);  
@@ -106,12 +118,15 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
     SongUtils.addFourOnTheFloorSequence($scope.currentSong);
     $localstorage.set('sm-808-songList', $scope.songList);
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
+  } else {
+    $scope.audioCache = setupAudio($scope.currentSong);
   }
 
   $scope.selectedStepsOption = $scope.currentSong.steps.toString();
   $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
   $scope.stepInterval = Math.round(60000/parseInt($scope.currentSong.bpm, 10));
   $scope.audioCache = setupAudio($scope.currentSong);
+  setPlayedLast();
   
 
   function setupAudio(currentSong) {
