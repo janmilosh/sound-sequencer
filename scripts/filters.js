@@ -1,6 +1,6 @@
-var drumFilters = angular.module('drumFilters', [])
+var soundFilters = angular.module('soundFilters', [])
 
-drumFilters.filter('slice', function() {
+soundFilters.filter('slice', function() {
   return function(arr, end) {
     return arr.slice(0, end);
   };

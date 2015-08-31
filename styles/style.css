@@ -1,5 +1,4 @@
 body {
-  background: #f1f1f1;
 }
 
 h1, h2, h3 {
@@ -23,6 +22,7 @@ h1, h2, h3 {
 
 h2.songname {
   color: #A7581E;
+  font-size: 26px;
 }
 
 p, .btn-default {
@@ -41,7 +41,7 @@ input[type="text"] {
 }
 
 #steps-form .form-control {
-  width: 65px;
+  width: 75px;
   float: right;
   color: #394D5D;
 }
@@ -55,8 +55,8 @@ input[type="text"] {
 }
 
 .panel {
-  padding: 15px 15px 15px 20px;
-  background: #fafafa;
+  padding: 15px 15px 15px 25px;
+  background: #f1f1f1;
   margin: 15px 0 30px;
 }
 
@@ -84,6 +84,11 @@ p.error {
   outline-offset: -2px;
   outline: none;
   outline-offset: -2px;
+}
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  opacity: .75;
+  filter: alpha(opacity=75);
 }
 
 .song-list {
@@ -125,7 +130,7 @@ tbody td.on.playing {
   background: #FF4A05;
 }
 
-td.drum-title,
+td.sound-title,
 thead td {
   background: #415769;
   color: white;
@@ -146,11 +151,7 @@ thead td {
   color: white;
 }
 
- /* Slider styles */
-
-/*.slider-container {
-  margin: 0 0 30px;
-}*/
+/* Slider styles */
 
 slider, [slider] {
   height: 10px;
