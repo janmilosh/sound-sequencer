@@ -1,20 +1,38 @@
 'use strict';
 
-var drumServices = angular.module('drumServices', []);
+var soundServices = angular.module('soundServices', []);
 
-drumServices.constant('DRUMLIST', [
-  ['Clap', 'clap.mp3', 'clapb.mp3'],
-  ['Clave', 'clave.mp3', 'claveb.mp3'],
-  ['Cow Bell', 'cow-bell.mp3', 'cow-bellb.mp3'],
-  ['Crash', 'crash-1.mp3', 'crash-1b.mp3'],
-  ['Hi Hat', 'hi-hat-1.mp3', 'hi-hat-1b.mp3'],
-  ['Kick Drum', 'kick-drum-1.mp3', 'kick-drum-1b.mp3'],
-  ['Maracas', 'maracas.mp3', 'maracasb.mp3'],
-  ['Rim Shot', 'rim-shot.mp3', 'rim-shotb.mp3'],
-  ['Snare Drum', 'snare-drum-1.mp3', 'snare-drum-1b.mp3']
+soundServices.constant('SOUNDS', [
+  {
+    'name': 'Drums',
+    'files':  [
+                ['Clap', 'drum/clap.mp3', 'drum/clapb.mp3'],
+                ['Clave', 'drum/clave.mp3', 'drum/claveb.mp3'],
+                ['Cow Bell', 'drum/cow-bell.mp3', 'drum/cow-bellb.mp3'],
+                ['Crash', 'drum/crash-1.mp3', 'drum/crash-1b.mp3'],
+                ['Hi Hat', 'drum/hi-hat-1.mp3', 'drum/hi-hat-1b.mp3'],
+                ['Kick Drum', 'drum/kick-drum-1.mp3', 'drum/kick-drum-1b.mp3'],
+                ['Maracas', 'drum/maracas.mp3', 'drum/maracasb.mp3'],
+                ['Rim Shot', 'drum/rim-shot.mp3', 'drum/rim-shotb.mp3'],
+                ['Snare Drum', 'drum/snare-drum-1.mp3', 'drum/snare-drum-1b.mp3']
+              ]
+  },
+  { 
+    'name': 'Comics',
+    'files':  [
+                ['Bang', 'comic/bang.wav', 'comic/bangb.wav'],
+                ['Click-whistle', 'comic/click-whistle.wav', 'comic/click-whistleb.wav'],
+                ['Kiss', 'comic/kiss.wav', 'comic/kissb.wav'],
+                ['Pop', 'comic/pop.wav', 'comic/popb.wav'],
+                ['Sneeze', 'comic/sneeze.wav', 'comic/sneezeb.wav'],
+                ['Horn blast', 'comic/horn-blast.wav', 'comic/horn-blastb.wav'],
+                ['Laser', 'comic/laser.wav', 'comic/laserb.wav'],
+                ['Alarm', 'comic/alarm.wav', 'comic/alarmb.wav']
+              ]
+  }
 ]);
 
-drumServices.constant('STEPS_OPTIONS', [
+soundServices.constant('STEPS_OPTIONS', [
     {value: '8', name: '8'},
     {value: '9', name: '9'},
     {value: '10', name: '10'},
@@ -34,7 +52,7 @@ drumServices.constant('STEPS_OPTIONS', [
     {value: '24', name: '24'},
   ]);
 
-drumServices.factory('$localstorage', ['$window', function($window) {
+soundServices.factory('$localstorage', ['$window', function($window) {
   //based on: http://learn.ionicframework.com/formulas/localstorage/
   return {
     set: function(key, value) {
@@ -51,7 +69,7 @@ drumServices.factory('$localstorage', ['$window', function($window) {
   };
 }]);
 
-drumServices.factory('Unique', function() {
+soundServices.factory('Unique', function() {
   return {
     isUniqueSongname: function(songName, songList) {
       var unique = true;
@@ -65,7 +83,7 @@ drumServices.factory('Unique', function() {
   };
 });
 
-drumServices.service('SongUtils', function(Song, $localstorage) {
+soundServices.service('SongUtils', function(Song, $localstorage) {
   var service = this;
   service.getSongList = function() {
     return $localstorage.get('sm-808-songList');
@@ -90,20 +108,20 @@ drumServices.service('SongUtils', function(Song, $localstorage) {
     return unique;
   };
   service.addFourOnTheFloorSequence = function(currentSong) {
-    currentSong.drums[4].stepsArray[2] = 'on';
-    currentSong.drums[4].stepsArray[6] = 'on';
-    currentSong.drums[4].stepsArray[10] = 'on';
-    currentSong.drums[4].stepsArray[14] = 'on';
-    currentSong.drums[5].stepsArray[0] = 'on';
-    currentSong.drums[5].stepsArray[4] = 'on';
-    currentSong.drums[5].stepsArray[8] = 'on';
-    currentSong.drums[5].stepsArray[12] = 'on';
-    currentSong.drums[8].stepsArray[4] = 'on';
-    currentSong.drums[8].stepsArray[12] = 'on';
+    currentSong.sounds[4].stepsArray[2] = 'on';
+    currentSong.sounds[4].stepsArray[6] = 'on';
+    currentSong.sounds[4].stepsArray[10] = 'on';
+    currentSong.sounds[4].stepsArray[14] = 'on';
+    currentSong.sounds[5].stepsArray[0] = 'on';
+    currentSong.sounds[5].stepsArray[4] = 'on';
+    currentSong.sounds[5].stepsArray[8] = 'on';
+    currentSong.sounds[5].stepsArray[12] = 'on';
+    currentSong.sounds[8].stepsArray[4] = 'on';
+    currentSong.sounds[8].stepsArray[12] = 'on';
   };
 });
 
-drumServices.factory('Song', function(DRUMLIST){  
+soundServices.factory('Song', function(SOUNDS){  
   var setEmptyStepsArray = function(steps) {
     var stepsArray = [];
     for(var i = 0; i < 24; i++) {
@@ -112,23 +130,24 @@ drumServices.factory('Song', function(DRUMLIST){
     return stepsArray;
   };
 
-  var populateDrumlist = function(drumArray, steps) {
-    angular.forEach(DRUMLIST, function(drum) {
+  var populateSoundList = function(soundArray, steps, soundSetIndex) {
+    angular.forEach(SOUNDS[soundSetIndex].files, function(sound) {
       
-      drumArray.push({
-                  title: drum[0],
-                  link: ['sounds/' + drum[1], 'sounds/' + drum[2]],
+      soundArray.push({
+                  title: sound[0],
+                  link: ['sounds/' + sound[1], 'sounds/' + sound[2]],
                   stepsArray: setEmptyStepsArray(steps)
                 });
     });
   };
 
-  var Song = function(name, steps, bpm) {
+  var Song = function(name, steps, bpm, soundSetIndex) {
     this.name = name;
-    this.drums = [];
+    this.sounds = [];
     this.steps = steps;
     this.bpm = bpm;
-    populateDrumlist(this.drums, this.steps);
+    this.soundSetName = SOUNDS[soundSetIndex].name;
+    populateSoundList(this.sounds, this.steps, soundSetIndex);
   };
 
   return Song;

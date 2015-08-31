@@ -1,8 +1,8 @@
 'use strict';
 
-var drumDirectives = angular.module('drumDirectives', []);
+var soundDirectives = angular.module('soundDirectives', []);
 
-drumDirectives.directive('unique', function (SongUtils) { 
+soundDirectives.directive('unique', function (SongUtils) { 
   return {
     require: 'ngModel',
     link: function(scope, elem, attr, ngModel) {
@@ -14,7 +14,7 @@ drumDirectives.directive('unique', function (SongUtils) {
   };
 });
 
-drumDirectives.directive('sliderUpdate', function ($localstorage, $rootScope) { 
+soundDirectives.directive('sliderUpdate', function ($localstorage, $rootScope) { 
   return {
     require: 'ngModel',
     link: function(scope, elem, attr, ngModel) {
@@ -29,7 +29,7 @@ drumDirectives.directive('sliderUpdate', function ($localstorage, $rootScope) {
   };
 });
 
-drumDirectives.directive('selectUpdate', function ($localstorage, SongUtils) { 
+soundDirectives.directive('selectUpdate', function ($localstorage, SongUtils) { 
   return {
     require: 'ngModel',
     link: function(scope, elem, attr, ngModel) {

@@ -1,10 +1,10 @@
 'use strict';
 
 var drumApp = angular.module('drumApp', [
-  'drumServices',
-  'drumControllers',
-  'drumDirectives',
-  'drumFilters',
+  'soundServices',
+  'soundControllers',
+  'soundDirectives',
+  'soundFilters',
   'ui.slider',
   'ngRoute'
 ]);
@@ -18,13 +18,3 @@ drumApp.config(function ($routeProvider, $locationProvider) {
       redirectTo: '/'
     });
 });
-
-//test out audo tag and methods
-// var audio = document.getElementById("drum1");
-// audio.preload = "auto";
-
-// var button = document.getElementById("button");
-// function playDrum(elem) { 
-//     document.getElementById(elem).load();
-//     document.getElementById(elem).play();
-// }

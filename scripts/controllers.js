@@ -1,13 +1,14 @@
 'use strict';
 
-var drumControllers = angular.module('drumControllers', []);
+var soundControllers = angular.module('soundControllers', []);
 
-drumControllers.controller('HomeController', function ($rootScope, $scope, $localstorage, $interval, $timeout, Song, SongUtils, Unique, STEPS_OPTIONS) {
+soundControllers.controller('HomeController', function ($rootScope, $scope, $localstorage, $interval, $timeout, Song, SongUtils, Unique, STEPS_OPTIONS, SOUNDS) {
   
   $scope.songList = SongUtils.getSongList();
   $scope.currentSong = SongUtils.getCurrentSong();
-
+  $scope.soundOptions = SOUNDS;
   $scope.options = STEPS_OPTIONS;
+  $scope.stopSequence = function() {};
   var playedLast = {}
 
   $scope.isCurrent = function(index) {
@@ -21,13 +22,15 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
   $scope.createNewSong = function() {
     var steps = 16;
     var bpm = 200;
-    var createdSong = new Song($scope.songname, steps, bpm);
+    var createdSong = new Song($scope.songname, steps, bpm, parseInt($scope.soundsIndex, 10));
     $scope.songname = '';
+    $scope.soundsIndex = '';
     $scope.songList.unshift(createdSong);
     $scope.currentSong = $scope.songList[0];
     $localstorage.set('sm-808-songList', $scope.songList);
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
+    $scope.audioCache = setupAudio();
   };
 
   $scope.deleteSong = function(index) {
@@ -39,7 +42,7 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
     $localstorage.set('sm-808-songList', $scope.songList);
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
-    $scope.audioCache = setupAudio($scope.currentSong);
+    $scope.audioCache = setupAudio();
     setPlayedLast();
   };
   
@@ -48,37 +51,37 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
     $scope.selectedStepsOption = $scope.currentSong.steps.toString();
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
-    $scope.audioCache = setupAudio($scope.currentSong);
+    $scope.audioCache = setupAudio();
     setPlayedLast();
   };
 
-  $scope.toggleState = function(drumIndex, index) {
-    if ($scope.currentSong.drums[drumIndex].stepsArray[index] === 'on') {
-      $scope.currentSong.drums[drumIndex].stepsArray[index] = 'off';
+  $scope.toggleState = function(soundIndex, index) {
+    if ($scope.currentSong.sounds[soundIndex].stepsArray[index] === 'on') {
+      $scope.currentSong.sounds[soundIndex].stepsArray[index] = 'off';
     } else {
-      $scope.currentSong.drums[drumIndex].stepsArray[index] = 'on';
+      $scope.currentSong.sounds[soundIndex].stepsArray[index] = 'on';
     }
     $localstorage.set('sm-808-songList', $scope.songList);
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
   }
   
   function setPlayedLast() {
-    angular.forEach($scope.currentSong.drums, function(drum) {
-      playedLast[drum.title] = false;
+    angular.forEach($scope.currentSong.sounds, function(sound) {
+      playedLast[sound.title] = false;
     });
   };
 
-  function drumLoop(index) {
-    angular.forEach($scope.currentSong.drums, function(drum) {
-      if (drum.stepsArray[index] === 'on') {
-        if (playedLast[drum.title] === false) {
-          $scope.audioCache.first[drum.title].play();
-          $scope.audioCache.second[drum.title].load();
+  function soundLoop(index) {
+    angular.forEach($scope.currentSong.sounds, function(sound) {
+      if (sound.stepsArray[index] === 'on') {
+        if (playedLast[sound.title] === false) {
+          $scope.audioCache.first[sound.title].play();
+          $scope.audioCache.second[sound.title].load();
         } else {
-          $scope.audioCache.second[drum.title].play();
-          $scope.audioCache.first[drum.title].load();
+          $scope.audioCache.second[sound.title].play();
+          $scope.audioCache.first[sound.title].load();
         }
-        playedLast[drum.title] = !playedLast[drum.title];
+        playedLast[sound.title] = !playedLast[sound.title];
       }        
     });
   };
@@ -88,7 +91,7 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
     $scope.playing = true;
     
     var start = $interval(function() {
-      drumLoop(songIndex);
+      soundLoop(songIndex);
       
       songIndex += 1;
                  
@@ -114,30 +117,30 @@ drumControllers.controller('HomeController', function ($rootScope, $scope, $loca
 
   if (!$scope.currentSong) {
     $scope.songname = 'Four on the Floor';
+    $scope.soundsIndex = '0';
     $scope.createNewSong();
     SongUtils.addFourOnTheFloorSequence($scope.currentSong);
     $localstorage.set('sm-808-songList', $scope.songList);
     $localstorage.set('sm-808-currentSong', $scope.currentSong);
   } else {
-    $scope.audioCache = setupAudio($scope.currentSong);
+    $scope.audioCache = setupAudio();
   }
 
   $scope.selectedStepsOption = $scope.currentSong.steps.toString();
   $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
   $scope.stepInterval = Math.round(60000/parseInt($scope.currentSong.bpm, 10));
-  $scope.audioCache = setupAudio($scope.currentSong);
+  $scope.audioCache = setupAudio();
   setPlayedLast();
-  
 
-  function setupAudio(currentSong) {
+  function setupAudio() {
     var audioCache = {};
     audioCache.first = {};
     audioCache.second = {};
     
-    angular.forEach(currentSong.drums, function(drum) {
-      audioCache.first[drum.title] = new Audio(drum.link[0]);
-      audioCache.second[drum.title] = new Audio(drum.link[1]);
-      audioCache.first[drum.title].load()
+    angular.forEach($scope.currentSong.sounds, function(sound) {
+      audioCache.first[sound.title] = new Audio(sound.link[0]);
+      audioCache.second[sound.title] = new Audio(sound.link[1]);
+      audioCache.first[sound.title].load()
     });
     return audioCache;
   };
