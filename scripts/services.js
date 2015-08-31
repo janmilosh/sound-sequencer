@@ -9,6 +9,7 @@ soundServices.constant('SOUNDS', [
                 ['Clap', 'drum/clap.mp3', 'drum/clapb.mp3'],
                 ['Clave', 'drum/clave.mp3', 'drum/claveb.mp3'],
                 ['Cow Bell', 'drum/cow-bell.mp3', 'drum/cow-bellb.mp3'],
+                ['More Cow Bell', 'drum/more-cow-bell.mp3', 'drum/more-cow-bellb.mp3'],
                 ['Crash', 'drum/crash-1.mp3', 'drum/crash-1b.mp3'],
                 ['Hi Hat', 'drum/hi-hat-1.mp3', 'drum/hi-hat-1b.mp3'],
                 ['Kick Drum', 'drum/kick-drum-1.mp3', 'drum/kick-drum-1b.mp3'],
