@@ -11,7 +11,7 @@ h1, h2, h3 {
 .header {
   background: #FFA05A;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .header h1 {
@@ -23,10 +23,15 @@ h1, h2, h3 {
 h2.songname {
   color: #A7581E;
   font-size: 26px;
+  margin-top: 40px;
 }
 
 p, .btn-default {
   color: #394D5D;
+}
+
+button.start-stop {
+  margin-top: 13px;
 }
 
 input[type="text"] {
@@ -55,7 +60,7 @@ input[type="text"] {
 }
 
 .panel {
-  padding: 15px 15px 15px 25px;
+  padding: 15px;
   background: #f1f1f1;
   margin: 15px 0 30px;
 }
