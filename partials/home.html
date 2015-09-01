@@ -1,37 +1,38 @@
 <div ng-controller="HomeController">
   <div class="container">
     <div class="row">
-      <div class="col-lg-5 col-med-4">
-        <button ng-click="setSoundsIndex($index)" ng-repeat="soundSet in soundSets track by $index">{{ soundSet.name }}</button>
+      <div class="col-xs-4">
+        <h2 class="songname">{{ currentSong.name }}</h2>
       </div>
-      <div class="col-lg-7 col-med-8">
-        <div class="row">
-          <form ng-submit="createNewSong()" name="form" novalidate>
-            <div class="col-xs-3">
-              <select
-                class="form-control"
-                name="soundSelect"
-                ng-model="soundsIndex"
-                required>
-                <option value="">--Sound Sets--</option>
-                <option ng-repeat="option in soundOptions track by $index" value="{{ $index }}">{{ option.name }}
-                </option>
-              </select>
+      <div class="col-xs-8">
+        <div class="panel clearfix">
+          <div class="row">
+            <div class="col-xs-2">
+              <button class="btn btn-block btn-med btn-default start-stop" ng-disabled="playing" ng-click="startSequence()">Start</button>
             </div>
-            <div class="col-xs-6">  
-              <input type="text"
-                name="songName"
-                ng-model="songname"
-                placeholder="New Sequence Name"
-                required
-                unique>
-              <p class="error" ng-if='form.songName.$error.unique'>Please input a unique name!</p>
-            </div> 
+            <div class="col-xs-2">
+              <button class="btn btn-block btn-med btn-default start-stop" ng-click="stopSequence()">Stop</button>
+            </div>
+            <div class="col-xs-5">
+              <div class="slider-container">
+                <!--https://github.com/PopSugar/angular-slider-->
+                <slider slider-update floor="100" ceiling="300" step="4" precision="4" ng-model="currentSong.bpm"></slider>
+              </div>
+            </div>
             <div class="col-xs-3">
-              <button ng-click="stopSequence()" type="submit" class="btn btn-primary btn-med btn-block" ng-disabled="form.$invalid">Add New</button>
-            </div>   
-          </form>
-        </div>
+              <form name="stepsForm" id="steps-form" ng-click="stopSequence()">
+                <label for="stepsSelect">steps</label>
+                <select
+                  select-update
+                  class="form-control"
+                  name="stepsSelect" 
+                  ng-model="selectedStepsOption" 
+                  ng-options="option.value as option.name for option in options">
+                </select>
+              </form>
+            </div>
+          </div>
+        </div>            
       </div>
     </div>
     <table class="table table-bordered">
@@ -49,36 +50,35 @@
       </tbody>
     </table>
     <div class="row">
-      <div class="col-lg-7 col-sm-12">
-        <div class="panel clearfix">
+      <div class="col-lg-7 col-med-8">
+        <div class="panel">
+          <p>Choose a soundset and name to create a new sequence.</p>
           <div class="row">
-            <div class="col-md-9 col-xs-6">
-              <h2 class="songname">{{ currentSong.name }}</h2>
-            </div>
-            <div class="col-md-3 col-xs-6">
-              <button class="btn btn-med btn-default" ng-disabled="playing" ng-click="startSequence()">Start</button>
-              <button class="btn btn-med btn-default" ng-click="stopSequence()">Stop</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-8">
-              <div class="slider-container">
-                <!--https://github.com/PopSugar/angular-slider-->
-                <slider slider-update floor="100" ceiling="300" step="4" precision="4" ng-model="currentSong.bpm"></slider>
-              </div>
-            </div>
-            <div class="col-xs-4">
-              <form name="stepsForm" id="steps-form" ng-click="stopSequence()">
-                <label for="stepsSelect">steps</label>
+            <form ng-submit="createNewSong()" name="form" novalidate>
+              <div class="col-xs-3">
                 <select
-                  select-update
                   class="form-control"
-                  name="stepsSelect" 
-                  ng-model="selectedStepsOption" 
-                  ng-options="option.value as option.name for option in options">
+                  name="soundSelect"
+                  ng-model="soundsIndex"
+                  required>
+                  <option value="">--Sound Set--</option>
+                  <option ng-repeat="option in soundOptions track by $index" value="{{ $index }}">{{ option.name }}
+                  </option>
                 </select>
-              </form>
-            </div>
+              </div>
+              <div class="col-xs-6">  
+                <input type="text"
+                  name="songName"
+                  ng-model="songname"
+                  placeholder="New Sequence Name"
+                  required
+                  unique>
+                <p class="error" ng-if='form.songName.$error.unique'>Please input a unique name!</p>
+              </div> 
+              <div class="col-xs-3">
+                <button ng-click="stopSequence()" type="submit" class="btn btn-primary btn-med btn-block" ng-disabled="form.$invalid">Add New</button>
+              </div>   
+            </form>
           </div>
         </div>
       </div>
@@ -92,6 +92,6 @@
           </div>
         </div>
       </div>
-    </div>   
+    </div>
   </div>
 </div>
