@@ -8,10 +8,10 @@
         <div class="panel clearfix">
           <div class="row">
             <div class="col-xs-2">
-              <button class="btn btn-block btn-med btn-default start-stop" ng-disabled="playing" ng-click="startSequence()">Start</button>
+              <button ng-class="{ 'btn-primary': !playing }" class="btn btn-block btn-med btn-default start-stop" ng-disabled="playing" ng-click="startSequence()">Start</button>
             </div>
             <div class="col-xs-2">
-              <button class="btn btn-block btn-med btn-default start-stop" ng-click="stopSequence()">Stop</button>
+              <button ng-class="{ 'btn-danger': playing }" class="btn btn-block btn-med btn-default start-stop" ng-click="stopSequence()" ng-disabled="!playing">Stop</button>
             </div>
             <div class="col-xs-5">
               <div class="slider-container">
