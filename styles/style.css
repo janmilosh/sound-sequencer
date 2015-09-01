@@ -96,6 +96,12 @@ p.error {
   filter: alpha(opacity=75);
 }
 
+.btn-primary.btn-default,
+.btn-danger.btn-default {
+  color: white;
+  text-shadow: none;
+}
+
 .song-list {
   margin-top: 15px;
 }
