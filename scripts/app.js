@@ -2,6 +2,7 @@
 
 var drumApp = angular.module('drumApp', [
   'soundServices',
+  'soundConstants',
   'soundControllers',
   'soundDirectives',
   'soundFilters',

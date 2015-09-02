@@ -27,8 +27,7 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     $scope.soundsIndex = '';
     $scope.songList.unshift(createdSong);
     $scope.currentSong = $scope.songList[0];
-    $localstorage.set('sm-808-songList', $scope.songList);
-    $localstorage.set('sm-808-currentSong', $scope.currentSong);
+    saveToLocalStorage()
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
     $scope.audioCache = setupAudio();
   };
@@ -39,8 +38,7 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     if (deletedSong.name == $scope.currentSong.name) {
       $scope.currentSong = $scope.songList[0];
     }
-    $localstorage.set('sm-808-currentSong', $scope.currentSong);
-    $localstorage.set('sm-808-songList', $scope.songList);
+    saveToLocalStorage()
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
     $scope.audioCache = setupAudio();
     setPlayedLast();
@@ -50,7 +48,7 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     $scope.currentSong = $scope.songList[index];
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
     $scope.selectedStepsOption = $scope.currentSong.steps.toString();
-    $localstorage.set('sm-808-currentSong', $scope.currentSong);
+    saveToLocalStorage()
     $scope.audioCache = setupAudio();
     setPlayedLast();
   };
@@ -61,8 +59,7 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     } else {
       $scope.currentSong.sounds[soundIndex].stepsArray[index] = 'on';
     }
-    $localstorage.set('sm-808-songList', $scope.songList);
-    $localstorage.set('sm-808-currentSong', $scope.currentSong);
+    saveToLocalStorage()
   }
   
   function setPlayedLast() {
@@ -120,8 +117,7 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     $scope.soundsIndex = '0';
     $scope.createNewSong();
     SongUtils.addFourOnTheFloorSequence($scope.currentSong);
-    $localstorage.set('sm-808-songList', $scope.songList);
-    $localstorage.set('sm-808-currentSong', $scope.currentSong);
+    saveToLocalStorage()
   } else {
     $scope.audioCache = setupAudio();
   }
@@ -131,6 +127,11 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
   $scope.stepInterval = Math.round(60000/parseInt($scope.currentSong.bpm, 10));
   $scope.audioCache = setupAudio();
   setPlayedLast();
+
+  function saveToLocalStorage() {
+    $localstorage.set('sm-808-songList', $scope.songList);
+    $localstorage.set('sm-808-currentSong', $scope.currentSong); 
+  };
 
   function setupAudio() {
     var audioCache = {};

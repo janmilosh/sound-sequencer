@@ -194,13 +194,6 @@ slider div.bubble.limit.high {
   font-size: 16px;
 }
 
-slider div.bubble.limit.low {
-  left: -11px;
-}
-
-slider div.bubble.limit.high {
-  right: 5px;
-}
 
 slider div.bubble, [slider] div.bubble {
   display: inline-block;
@@ -208,3 +201,20 @@ slider div.bubble, [slider] div.bubble {
   top: -30px;
   font-size: 16px;
 }
+
+@media (min-width: 768px) {
+  .container {
+      width: 100%;
+  }
+
+  h2.songname {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  h2.songname {
+    margin-top: 20px;
+  }
+}
+  
