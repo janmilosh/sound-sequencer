@@ -206,15 +206,11 @@ slider div.bubble, [slider] div.bubble {
   .container {
       width: 100%;
   }
-
-  h2.songname {
-    margin-top: 0;
-  }
 }
 
 @media (max-width: 767px) {
   h2.songname {
-    margin-top: 20px;
+    margin-top: 0;
   }
 }
   

@@ -56,7 +56,7 @@ soundConstants.constant('SOUNDS', [
                 ['Harp', 'gong-and-stuff/harp.wav', 'gong-and-stuff/harpb.wav'],
                 ['More harp', 'gong-and-stuff/more-harp.wav', 'gong-and-stuff/more-harpb.wav'],
                 ['Horn', 'gong-and-stuff/horn.wav', 'gong-and-stuff/hornb.wav'],
-                ['Korean blocks', 'gong-and-stuff/korean-blocks.wav', 'gong-and-stuff/sneezeb.wav'],
+                ['Korean blocks', 'gong-and-stuff/korean-blocks.wav', 'gong-and-stuff/korean-blocksb.wav'],
                 ['Tympani', 'gong-and-stuff/tympani.wav', 'gong-and-stuff/tympanib.wav']
               ]
   }
