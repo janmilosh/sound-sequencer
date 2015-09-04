@@ -2,7 +2,7 @@
 
 var soundControllers = angular.module('soundControllers', []);
 
-soundControllers.controller('HomeController', function ($rootScope, $scope, $localstorage, $interval, $timeout, Song, SongUtils, Unique, STEPS_OPTIONS, SOUNDS) {
+soundControllers.controller('HomeController', function ($rootScope, $scope, $interval, $timeout, Song, SongUtils, Unique, STEPS_OPTIONS, SOUNDS) {
   
   $scope.songList = SongUtils.getSongList();
   $scope.currentSong = SongUtils.getCurrentSong();
@@ -27,9 +27,9 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     $scope.soundsIndex = '';
     $scope.songList.unshift(createdSong);
     $scope.currentSong = $scope.songList[0];
-    saveToLocalStorage()
+    SongUtils.saveToLocalStorage($scope.songList, $scope.currentSong);
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
-    $scope.audioCache = setupAudio();
+    $scope.audioCache = SongUtils.setupAudio($scope.currentSong);
   };
 
   $scope.deleteSong = function(index) {
@@ -38,9 +38,9 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     if (deletedSong.name == $scope.currentSong.name) {
       $scope.currentSong = $scope.songList[0];
     }
-    saveToLocalStorage()
+    SongUtils.saveToLocalStorage($scope.songList, $scope.currentSong);
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
-    $scope.audioCache = setupAudio();
+    $scope.audioCache = SongUtils.setupAudio($scope.currentSong);
     setPlayedLast();
   };
   
@@ -48,8 +48,8 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     $scope.currentSong = $scope.songList[index];
     $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
     $scope.selectedStepsOption = $scope.currentSong.steps.toString();
-    saveToLocalStorage()
-    $scope.audioCache = setupAudio();
+    SongUtils.saveToLocalStorage($scope.songList, $scope.currentSong);
+    $scope.audioCache = SongUtils.setupAudio($scope.currentSong);
     setPlayedLast();
   };
 
@@ -59,7 +59,7 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
     } else {
       $scope.currentSong.sounds[soundIndex].stepsArray[index] = 'on';
     }
-    saveToLocalStorage()
+    SongUtils.saveToLocalStorage($scope.songList, $scope.currentSong);
   }
   
   function setPlayedLast() {
@@ -113,36 +113,23 @@ soundControllers.controller('HomeController', function ($rootScope, $scope, $loc
   }  
 
   if (!$scope.currentSong) {
-    $scope.songname = 'Four on the Floor';
-    $scope.soundsIndex = '0';
-    $scope.createNewSong();
-    SongUtils.addFourOnTheFloorSequence($scope.currentSong);
-    saveToLocalStorage()
+    createDefaultSong();
   } else {
-    $scope.audioCache = setupAudio();
+    $scope.audioCache = SongUtils.setupAudio($scope.currentSong);
   }
 
   $scope.selectedStepsOption = $scope.currentSong.steps.toString();
   $scope.range = SongUtils.setRangeArray($scope.currentSong.steps);
   $scope.stepInterval = Math.round(60000/parseInt($scope.currentSong.bpm, 10));
-  $scope.audioCache = setupAudio();
+  $scope.audioCache = SongUtils.setupAudio($scope.currentSong);
   setPlayedLast();
 
-  function saveToLocalStorage() {
-    $localstorage.set('sm-808-songList', $scope.songList);
-    $localstorage.set('sm-808-currentSong', $scope.currentSong); 
+  function createDefaultSong() {
+    $scope.songname = 'Four on the Floor';
+    $scope.soundsIndex = '0';
+    $scope.createNewSong();
+    SongUtils.addFourOnTheFloorSequence($scope.currentSong);
+    SongUtils.saveToLocalStorage($scope.songList, $scope.currentSong);
   };
 
-  function setupAudio() {
-    var audioCache = {};
-    audioCache.first = {};
-    audioCache.second = {};
-    
-    angular.forEach($scope.currentSong.sounds, function(sound) {
-      audioCache.first[sound.title] = new Audio(sound.link[0]);
-      audioCache.second[sound.title] = new Audio(sound.link[1]);
-      audioCache.first[sound.title].load()
-    });
-    return audioCache;
-  };
 });

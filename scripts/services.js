@@ -34,7 +34,9 @@ soundServices.factory('Unique', function() {
 });
 
 soundServices.service('SongUtils', function(Song, $localstorage) {
+  
   var service = this;
+  
   service.getSongList = function() {
     return $localstorage.get('sm-808-songList');
   };
@@ -68,6 +70,22 @@ soundServices.service('SongUtils', function(Song, $localstorage) {
     currentSong.sounds[5].stepsArray[12] = 'on';
     currentSong.sounds[8].stepsArray[4] = 'on';
     currentSong.sounds[8].stepsArray[12] = 'on';
+  };
+  service.setupAudio = function(currentSong) {
+    var audioCache = {};
+    audioCache.first = {};
+    audioCache.second = {};
+    
+    angular.forEach(currentSong.sounds, function(sound) {
+      audioCache.first[sound.title] = new Audio(sound.link[0]);
+      audioCache.second[sound.title] = new Audio(sound.link[1]);
+      audioCache.first[sound.title].load()
+    });
+    return audioCache;
+  };
+  service.saveToLocalStorage = function(songList, currentSong) {
+    $localstorage.set('sm-808-songList', songList);
+    $localstorage.set('sm-808-currentSong', currentSong); 
   };
 });
 
